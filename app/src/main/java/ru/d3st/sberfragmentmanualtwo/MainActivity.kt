@@ -1,11 +1,11 @@
 package ru.d3st.sberfragmentmanualtwo
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
 import android.widget.CheckBox
 import android.widget.RadioGroup
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.add
@@ -44,9 +44,14 @@ class MainActivity : AppCompatActivity() {
         if (firstFragment != null) {
             val btnAdd = firstFragment.requireView().findViewById<Button>(R.id.btn_add).apply {
                 setOnClickListener {
+                    //select operation (Replace or Add)
                     val operationFragment = getFragmentOperation(firstFragment)
+                    //status CheckBox
                     val checkState = getCheckState(firstFragment)
+                    //amount Fragments in BackStack
                     var backCount = supportFragmentManager.backStackEntryCount
+                    //if we add fragments in backStack, we increase count
+                    // and provide it to now created fragment
                     if (checkState) backCount++
                     val bundleCount = bundleOf(BACK_COUNT to backCount)
                     supportFragmentManager.commit {
@@ -72,6 +77,7 @@ class MainActivity : AppCompatActivity() {
             val btnRemove =
                 firstFragment.requireView().findViewById<Button>(R.id.btn_remove).apply {
                     setOnClickListener {
+                        //remove fragment from BackStack
                         supportFragmentManager.popBackStack()
                     }
                 }
